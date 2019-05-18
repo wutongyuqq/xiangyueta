@@ -1,64 +1,42 @@
-package com.xiangyueta.two;
+package com.xiangyueta.two.msg;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
-import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.xiangyueta.two.adapter.FirstFragmentAdapter;
-import com.xiangyueta.two.adapter.WatchMsgAdapter;
-import com.xiangyueta.two.entity.JSONBean;
-import com.xiangyueta.two.entity.MsgBean;
-import com.xiangyueta.two.entity.Resualt;
-import com.xiangyueta.two.http.AsyncHttp;
-import com.xiangyueta.two.util.MyParcel;
 
-public class WatchMsgActivity extends Activity implements OnClickListener{
-    Intent localIntent;
+import com.xiangyueta.two.R;
+import com.xiangyueta.two.adapter.WatchMsgAdapter;
+import com.xiangyueta.two.chat.ChatMsgActivity;
+import com.xiangyueta.two.entity.MsgBean;
+import com.xiangyueta.two.support.NavSupport;
+import com.xiangyueta.two.support.TabSupport;
+
+/*
+* 私信列表
+*
+* */
+public class MsgListActivity extends Activity implements OnClickListener{
     ImageView image;
-    DisplayImageOptions options;        // DisplayImageOptions是用于设置图片显示的类  
     ListView listView;
     List<MsgBean> listData;
-    LinearLayout ll_bt_ff;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.watch_msg);
-        ll_bt_ff = (LinearLayout) findViewById(R.id.ll_bt_ff);
-        ll_bt_ff.setOnClickListener(this);
+        new NavSupport(this,3);
+        new TabSupport(this,3);
+
         listData = new ArrayList<MsgBean>();
         MsgBean bean1 = new MsgBean();
         bean1.setName("青儿");
@@ -109,7 +87,7 @@ public class WatchMsgActivity extends Activity implements OnClickListener{
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent toChat = new Intent(WatchMsgActivity.this, ChatMsgActivity.class);
+				Intent toChat = new Intent(MsgListActivity.this, ChatMsgActivity.class);
 				startActivity(toChat);
 	             overridePendingTransition(0, 0);
 			}
@@ -117,12 +95,6 @@ public class WatchMsgActivity extends Activity implements OnClickListener{
     }
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
-		case R.id.ll_bt_ff:
-			 Intent centerIntent = new Intent(this, MainNavActivity.class);
-             startActivity(centerIntent);
-             overridePendingTransition(0, 0);
-			break;
-		}
+
 	}
 }

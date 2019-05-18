@@ -1,4 +1,4 @@
-package com.xiangyueta.two;
+package com.xiangyueta.two.chat;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -14,17 +14,13 @@ import android.widget.TextView;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ChatManagerListener;
-import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.MessageListener;
-import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.packet.Message.Type;
 
+import com.xiangyueta.two.R;
 import com.xiangyueta.two.adapter.ChatMsgAdapter;
 import com.xiangyueta.two.dao.LoginDao;
 import com.xiangyueta.two.util.App;

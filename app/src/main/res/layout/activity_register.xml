@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:background="#f0f0f0"
+    android:orientation="vertical"
+    >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="#ffffff"
+        android:padding="10dp"
+        android:hint="请输入手机号"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:layout_marginTop="20dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="160dp"
+            android:padding="8dp"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:hint="请输入验证码"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#E95376"
+                android:textColor="#ffffff"
+                android:padding="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:text="获取验证码"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="#ffffff"
+        android:padding="10dp"
+        android:hint="请输入密码"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:hint="推荐人手机号（选填）"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="#E95376"
+        android:textColor="#ffffff"
+        android:layout_marginTop="40dp"
+        android:text="注册"/>
+
+</LinearLayout>

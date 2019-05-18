@@ -1,6 +1,5 @@
-package com.xiangyueta.two;
+package com.xiangyueta.two.home;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -11,12 +10,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -24,31 +20,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
+import com.xiangyueta.two.R;
 import com.xiangyueta.two.adapter.MyFragmentPagerAdapter;
-import com.xiangyueta.two.entity.MsgBean;
-import com.xiangyueta.two.entity.Resualt;
 import com.xiangyueta.two.fragment.FirstFragment;
 import com.xiangyueta.two.fragment.FourthFragment;
 import com.xiangyueta.two.fragment.SecondFragment;
 import com.xiangyueta.two.fragment.ThirdFragment;
-import com.xiangyueta.two.http.AsyncHttp;
-import com.xiangyueta.two.util.JsonUtils;
-import com.xiangyueta.two.util.MyParcel;
+import com.xiangyueta.two.support.NavSupport;
+import com.xiangyueta.two.support.TabSupport;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2017/2/23 0023.
+ * 首页
  */
-public class MainNavActivity extends FragmentActivity implements View.OnClickListener{
-    private RelativeLayout rl_bottom_02,rl_bottom_03, iv_right;
-    private ImageView iv_search,iv_msg;
+public class HomeActivity extends FragmentActivity implements View.OnClickListener{
+
+
     private View indicator;
     private int currIndex = 0;
     private int bottomLineWidth;
@@ -70,11 +60,9 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.main_nav);
-        rl_bottom_03 = (RelativeLayout) findViewById(R.id.rl_bottom_03);
-        rl_bottom_02 = (RelativeLayout) findViewById(R.id.rl_bottom_02);
-        iv_search = (ImageView) findViewById(R.id.iv_search);
-        iv_msg = (ImageView) findViewById(R.id.iv_msg);
+        setContentView(R.layout.activity_home);
+
+
         tv_tongcheng = (TextView) findViewById(R.id.tv_tongcheng);
         tv_tuijian = (TextView) findViewById(R.id.tv_tuijian);
         tv_guanzhu = (TextView) findViewById(R.id.tv_guanzhu);
@@ -82,11 +70,8 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
       
         indicator = findViewById(R.id.iv_bottom_line);
         
-        rl_bottom_02.setOnClickListener(this);
-        rl_bottom_03.setOnClickListener(this);
-        
-        iv_search.setOnClickListener(this);
-        iv_msg.setOnClickListener(this);
+
+
         tv_tongcheng.setOnClickListener(new MyOnClickListener(0));
         tv_tuijian.setOnClickListener(new MyOnClickListener(1));
         tv_guanzhu.setOnClickListener(new MyOnClickListener(2));
@@ -95,6 +80,8 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
         
         viewpager = (ViewPager)findViewById(R.id.vImagePager);
 		dots = (LinearLayout)findViewById(R.id.dots);
+		new TabSupport(this,1);
+		new NavSupport(this,1);
 		showViewPager();
         initViewPager();
     }
@@ -103,31 +90,6 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.rl_bottom_02:
-                Intent centerIntent = new Intent(this, WatchMsgActivity.class);
-                startActivity(centerIntent);
-                overridePendingTransition(0, 0);
-                break;
-            case R.id.rl_bottom_03:
-                Intent rightIntent = new Intent(this, MainNavRightctivity.class);
-                startActivity(rightIntent);
-                overridePendingTransition(0, 0);
-                break;
-            case R.id.iv_search:
-            	Intent searchIntent = new Intent(this, SearchInfoActivity.class);
-            	startActivity(searchIntent);
-            	overridePendingTransition(0, 0);
-            	break;
-            case R.id.iv_msg:
-            	Intent newsInfoIntent = new Intent(this, NewsInfoActivity.class);
-            	startActivity(newsInfoIntent);
-            	overridePendingTransition(0, 0);
-            	break;
-            default:
-            	break;
-        }
 
     }
 
@@ -136,8 +98,7 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
     private void initViewPager() {
     	 int w = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED); 
     	 int h = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED); 
-    	 tv_guanzhu.measure(w, h); 
-    	 iv_search.measure(w, h); 
+    	 tv_guanzhu.measure(w, h);
     	 indicator.measure(w, h);
     	
        // int firstToLeft =
@@ -168,23 +129,6 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
         fragmentsList.add(thirdFtagment);
         fragmentsList.add(fourthFtagment);
         mPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentsList));
-       /* Bundle bundle = new Bundle();
-        bundle.putString("otherUserId", otherUserId);
-        bundle.putString("userId", userId);
-        Fragment familyRecordFragment = new FamilyRecordFragment();
-        Fragment familySpecialListFragment = new FamilySpecialListFragment();
-        //Fragment familyCasebookFragment = new FamilyCasebookFragment();
-        familyRecordFragment.setArguments(bundle);
-        familySpecialListFragment.setArguments(bundle);
-        //familyCasebookFragment.setArguments(bundle);
-        fragmentsList.add(familyRecordFragment);
-        fragmentsList.add(familySpecialListFragment);
-        //fragmentsList.add(familyCasebookFragment);
-
-        mPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentsList));
-        mPager.setOnPageChangeListener(new MyOnPageChangeListener());
-        */
-
         mPager.setOnPageChangeListener(new MyOnPageChangeListener());
         mPager.setCurrentItem(0);
         Animation animation = new TranslateAnimation(currIndex * dWidth + offset, dWidth, 0, 0);
@@ -213,7 +157,6 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
         public void onPageSelected(int pos) {
             switch (pos) {
                 case 0:
-                	
                 	tv_tongcheng.setTextColor(resource.getColor(R.color.little_red));
                 	tv_tuijian.setTextColor(resource.getColor(R.color.little_grey));
                 	tv_guanzhu.setTextColor(resource.getColor(R.color.little_grey));
@@ -276,16 +219,13 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
 
 			}
 
-			// ��ʾָ���±��ҳ��
 			@Override
 			public Object instantiateItem(ViewGroup container, int position) {
-
 				position = position % 3;
 				if (position < 0) {
 					position = views.size() + position;
 				}
 				View view = views.get(position);
-				// ���View�Ѿ���֮ǰ��ӵ���һ����������������remove��������׳�IllegalStateException��
 				ViewParent vp = view.getParent();
 				if (vp != null) {
 					ViewGroup parent = (ViewGroup) vp;
@@ -296,7 +236,6 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
 				return view;
 			}
 
-			// �ٷ����Ķ�
 			@Override
 			public boolean isViewFromObject(View view, Object obj) {
 				return view == obj;
@@ -308,7 +247,6 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
 			}
 		};
 
-		// -------------------------3����
 		final ArrayList<ImageView> allDot = new ArrayList<ImageView>();
 		for (int i = 0; i < 3; i++) {
 			ImageView child = (ImageView) View.inflate(this,
@@ -318,7 +256,6 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
 		}
 		allDot.get(currItem).setSelected(true);
 
-		// -----------------------�����¼�
 		viewpager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			// ��Ӧҳ���л�
@@ -334,12 +271,12 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
 
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// viewpager.setCurrentItem(1, false);
+
 			}
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
+
 
 			}
 		});
@@ -348,9 +285,8 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
 
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			// viewpager.setCurrentItem(ҳ���±�);
 			int next = viewpager.getCurrentItem() + 1;
-			viewpager.setCurrentItem(next); // ����onPageChange
+			viewpager.setCurrentItem(next);
 		};
 	};
 
@@ -364,9 +300,7 @@ public class MainNavActivity extends FragmentActivity implements View.OnClickLis
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
-					// �л�ҳ��obtain=get
-					Message msg = handler.obtainMessage(1);// obtainMessage�Ż��Ĵ�����Ϣ
+					Message msg = handler.obtainMessage(1);
 					handler.sendMessage(msg);
 				}
 

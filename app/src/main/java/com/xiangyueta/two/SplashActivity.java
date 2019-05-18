@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -15,23 +14,18 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
+
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.xiangyueta.two.entity.JSONBean;
 import com.xiangyueta.two.entity.Resualt;
+import com.xiangyueta.two.home.HomeActivity;
 import com.xiangyueta.two.http.AsyncHttp;
 import com.xiangyueta.two.util.MyParcel;
 
-public class MainActivity extends Activity {
+/*
+* 启动页
+* */
+public class SplashActivity extends Activity {
     Intent localIntent;
     ImageView image;
     DisplayImageOptions options;        // DisplayImageOptions是用于设置图片显示的类  
@@ -42,7 +36,7 @@ public class MainActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-         localIntent=new Intent(this,MainNavActivity.class);
+         localIntent=new Intent(this,HomeActivity.class);
          judgeStatu();
     }
     

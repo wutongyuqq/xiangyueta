@@ -8,7 +8,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class NewsInfoActivity extends Activity implements OnClickListener{
+public class ChooseCityActivity extends Activity implements OnClickListener{
 	ImageView iv_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

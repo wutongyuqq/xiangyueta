@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*
+* 搜索页
+* */
 public class SearchInfoActivity extends Activity implements OnClickListener{
 	ImageView iv_back;
 	 private LinearLayout ll_show;
