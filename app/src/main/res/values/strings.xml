@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Two</string>
+    <string name="internet_ip_debug">http://192.168.8.178</string>
+    <string name="ip_address_debug">http://192.168.8.178</string>
+    <string name="internet_ip">http://192.168.8.178</string>
+    <string name="ip_address">http://192.168.8.178</string>
+</resources>

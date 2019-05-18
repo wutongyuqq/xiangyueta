@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp" >
+    <RelativeLayout
+        android:id="@+id/rl_show_time" 
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="2017-03-25 09:44:09"/>
+        
+        
+    </RelativeLayout>
+	<RelativeLayout 
+	    android:id="@+id/rl_01"
+	android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_below="@+id/rl_show_time">
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/girl003" />
+
+    <TextView
+        android:id="@+id/iv_tip"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/iv_head"
+        android:background="@drawable/ic_btn_msg"
+        android:gravity="center"
+        android:text="11"
+        android:textColor="#ffffff"
+        android:textSize="13px" />
+	</RelativeLayout>
+	<RelativeLayout 
+	    android:id="@+id/rl_02"
+	    android:layout_width="match_parent"
+	    android:layout_height="60dp"
+	    android:layout_alignTop="@+id/rl_01"
+	    android:layout_toRightOf="@+id/rl_01"
+	    >
+    <TextView 
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/default_search"
+        android:paddingLeft="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:textSize="32px"
+        android:text="在干嘛呢？我想看看你？能QQ视频吗"/>
+	</RelativeLayout>
+	
+
+</RelativeLayout>
