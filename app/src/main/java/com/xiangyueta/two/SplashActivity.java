@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.xiangyueta.two.entity.Resualt;
 import com.xiangyueta.two.home.HomeActivity;
 import com.xiangyueta.two.http.AsyncHttp;
+import com.xiangyueta.two.login.LoginActivity;
 import com.xiangyueta.two.util.MyParcel;
 
 /*
@@ -36,7 +37,7 @@ public class SplashActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-         localIntent=new Intent(this,HomeActivity.class);
+         localIntent=new Intent(this,LoginActivity.class);
          judgeStatu();
     }
     
@@ -62,21 +63,22 @@ public class SplashActivity extends Activity {
 					Resualt resualt = gson.fromJson(newReult, Resualt.class);
 						status = resualt.getCode();
 				}
-				
+                toMain();
 				switch (status) {
 				case 0:
-					Toast.makeText(getApplicationContext(), "请求失败,请稍后重试", 0).show();
+
+					Toast.makeText(getApplicationContext(), "请求失败,请稍后重试", Toast.LENGTH_LONG).show();
 					break;
 				case 1:
-					Toast.makeText(getApplicationContext(), "请求成功", 0).show();
-					toMain();
+					Toast.makeText(getApplicationContext(), "请求成功", Toast.LENGTH_LONG).show();
 					break;
 				}
 			}
 			@Override
 			public void onFail(Object reult) {
+                toMain();
 				//返回的网络数据为空；
-				Toast.makeText(getApplicationContext(), "未获取到网络数据", 0).show();
+				Toast.makeText(getApplicationContext(), "未获取到网络数据", Toast.LENGTH_LONG).show();
 			}
 		};
 		ah.execute(1000);

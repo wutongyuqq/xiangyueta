@@ -6,17 +6,16 @@
     android:layout_height="match_parent"
     android:background="#EEEEF3"
   >
-    <include
-        android:id="@+id/nav_layout_title"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/nav_support"/>
+        android:layout_height="match_parent"
+        android:background="#EEEEF3"
+        >
     <com.xiangyueta.two.view.SwipeFlingAdapterView
         android:id="@+id/swipe_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#EEEEF3"
-        android:layout_below="@+id/nav_layout_title"
         swipe:min_adapter_stack="4"
         swipe:max_visible="4"
         swipe:y_offset_step="28dp"/>
@@ -27,12 +26,12 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="82dp"/>
+        android:layout_marginBottom="22dp"/>
 
     <ImageView
         android:id="@+id/swipeLeft"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignTop="@id/anchor"
         android:layout_toLeftOf="@id/anchor"
         android:layout_marginRight="56dp"
@@ -42,18 +41,13 @@
 
     <ImageView
         android:id="@+id/swipeRight"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignTop="@id/anchor"
         android:layout_toRightOf="@id/anchor"
         android:layout_marginLeft="56dp"
         android:background="@drawable/bg_button"
         android:padding="10dp"
         android:src="@drawable/fujin_xh"/>
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        layout="@layout/tab_support"/>
+    </RelativeLayout>
 </RelativeLayout>

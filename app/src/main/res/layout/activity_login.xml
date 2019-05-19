@@ -10,6 +10,8 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:background="#cc000000"
        >
 
@@ -22,8 +24,8 @@
             android:text="想约她"/>
         <LinearLayout
             android:id="@+id/phone_register"
-            android:layout_width="260dp"
-            android:layout_height="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginTop="100dp"
             android:background="#E85275"
             android:gravity="center">
@@ -36,8 +38,8 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/wx_login"
-            android:layout_width="260dp"
-            android:layout_height="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginTop="20dp"
             android:background="#44CB75"
             android:gravity="center">
@@ -51,8 +53,8 @@
 
         <LinearLayout
             android:id="@+id/phone_login"
-            android:layout_width="260dp"
-            android:layout_height="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginTop="20dp"
             android:background="#5DB6DA"
             android:gravity="center">

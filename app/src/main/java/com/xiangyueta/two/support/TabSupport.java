@@ -1,30 +1,42 @@
 package com.xiangyueta.two.support;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.xiangyueta.two.near.NearActivity;
+import com.xiangyueta.two.home.HomeFragment;
 import com.xiangyueta.two.home.HomeActivity;
-import com.xiangyueta.two.person.PersonInfoActivity;
+import com.xiangyueta.two.near.NearFragment;
 import com.xiangyueta.two.R;
-import com.xiangyueta.two.msg.MsgListActivity;
+import com.xiangyueta.two.msg.MsgListFragment;
+import com.xiangyueta.two.person.PersonInfoFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabSupport implements View.OnClickListener{
 
     private Activity mActivity;
-    private int mFromType;//1、首页 2、附近  3、消息  4、个人
+    private int mFromType=1;//1、首页 2、附近  3、消息  4、个人
     private RelativeLayout rl_bttom_01,rl_bottom_02,rl_bottom_03, rl_bottom_04;
     private ImageView iv_one,iv_two,iv_three,iv_four;
-    public TabSupport(Activity activity,int fromType){
+    private List<Fragment> fragmentList;
+    public TabSupport(Activity activity){
         this.mActivity = activity;
-        this.mFromType = fromType;
         initView();
     }
 
+    public void setFromType(int fromType){
+        this.mFromType = fromType;
+    }
+
     private void initView() {
+        fragmentList = new ArrayList<>(4);
+        fragmentList.add(new HomeFragment());
+        fragmentList.add(new NearFragment());
+        fragmentList.add(new MsgListFragment());
+        fragmentList.add(new PersonInfoFragment());
         rl_bttom_01 = (RelativeLayout) findViewById(R.id.rl_bttom_01);
         rl_bottom_03 = (RelativeLayout) findViewById(R.id.rl_bottom_03);
         rl_bottom_02 = (RelativeLayout) findViewById(R.id.rl_bottom_02);
@@ -37,14 +49,15 @@ public class TabSupport implements View.OnClickListener{
         rl_bottom_02.setOnClickListener(this);
         rl_bottom_03.setOnClickListener(this);
         rl_bottom_04.setOnClickListener(this);
-        setTabImage();
+
     }
 
     public View findViewById(int id){
         return mActivity.findViewById(id);
     }
 
-    private void setTabImage(){
+    private void setTabImage(int fromType){
+        mFromType = fromType;
         iv_one.setImageResource(mFromType==1?R.drawable.first_nav_red:R.drawable.first_nav_white);
         iv_two.setImageResource(mFromType==2?R.drawable.btn_discovery_red:R.drawable.btn_discovery_white);
         iv_three.setImageResource(mFromType==3?R.drawable.btn_mail_red:R.drawable.btn_mail_white);
@@ -52,31 +65,38 @@ public class TabSupport implements View.OnClickListener{
     }
     @Override
     public void onClick(View view) {
-        Intent intent;
         switch (view.getId()) {
             case R.id.rl_bttom_01:
-                intent = new Intent(mActivity, HomeActivity.class);
-                mActivity.startActivity(intent);
-                mActivity.overridePendingTransition(0, 0);
+                setTabImage(1);
+                ((HomeActivity)mActivity).getSupportFragmentManager()    //
+                        .beginTransaction()
+                        .replace(R.id.fragment_tab,fragmentList.get(0))   // 此处的R.id.fragment_container是要盛放fragment的父容器
+                        .commit();
                 break;
             /*
              * 消息列表
              * */
             case R.id.rl_bottom_02:
-                intent = new Intent(mActivity, NearActivity.class);
-                mActivity.startActivity(intent);
-                mActivity.overridePendingTransition(0, 0);
+                setTabImage(2);
+                ((HomeActivity)mActivity).getSupportFragmentManager()    //
+                        .beginTransaction()
+                        .replace(R.id.fragment_tab,fragmentList.get(1))   // 此处的R.id.fragment_container是要盛放fragment的父容器
+                        .commit();
                 break;
             case R.id.rl_bottom_03:
-                intent = new Intent(mActivity, MsgListActivity.class);
-                mActivity.startActivity(intent);
-                mActivity.overridePendingTransition(0, 0);
+                setTabImage(3);
+                ((HomeActivity)mActivity).getSupportFragmentManager()    //
+                        .beginTransaction()
+                        .replace(R.id.fragment_tab,fragmentList.get(2))   // 此处的R.id.fragment_container是要盛放fragment的父容器
+                        .commit();
                 break;
 
             case R.id.rl_bottom_04:
-                intent = new Intent(mActivity, PersonInfoActivity.class);
-                mActivity.startActivity(intent);
-                mActivity.overridePendingTransition(0, 0);
+                setTabImage(4);
+                ((HomeActivity)mActivity).getSupportFragmentManager()    //
+                        .beginTransaction()
+                        .replace(R.id.fragment_tab,fragmentList.get(3))   // 此处的R.id.fragment_container是要盛放fragment的父容器
+                        .commit();
                 break;
         }
 

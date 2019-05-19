@@ -1,4 +1,4 @@
-package com.xiangyueta.two.login;
+package com.xiangyueta.two.persondetail;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,19 +10,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xiangyueta.two.R;
-import com.xiangyueta.two.home.HomeActivity;
+import com.xiangyueta.two.chat.ChatMsgActivity;
+import com.xiangyueta.two.login.PhoneLoginActivity;
+import com.xiangyueta.two.login.RegisterActivity;
 
-public class PhoneLoginActivity extends Activity implements OnClickListener{
+public class PersonDetailActivity extends Activity implements OnClickListener{
 
-    private TextView login_btn;
+    private LinearLayout phone_register,wx_login,phone_login;
+    private TextView send_msg_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_phone_login);
-        login_btn = findViewById(R.id.login_btn);
-
-        login_btn.setOnClickListener(this);
+        setContentView(R.layout.activity_person_detail);
+        send_msg_btn = findViewById(R.id.send_msg_btn);
+        send_msg_btn.setOnClickListener(this);
     }
 
     @Override
@@ -33,8 +35,8 @@ public class PhoneLoginActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
         switch (v.getId()){
-            case R.id.login_btn:
-                startActivity(new Intent(this,HomeActivity.class));
+            case R.id.send_msg_btn:
+                startActivity(new Intent(PersonDetailActivity.this,ChatMsgActivity.class));
                 break;
             default:
                 break;

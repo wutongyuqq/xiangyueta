@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include
-        android:id="@+id/person_nav"
-        layout="@layout/nav_support"/>
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F6F7FB"
-        android:layout_below="@+id/person_nav"
         android:orientation="vertical">
 
         <LinearLayout
@@ -129,6 +127,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/vip_pay"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -139,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="会员注册"
+                android:text="会员权利"
                 android:textColor="#000000" />
 
             <ImageView
@@ -159,38 +158,10 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:background="#ffffff"
-            android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="我的收益"
-                android:textColor="#000000" />
-
-            <ImageView
-                android:id="@+id/iv_right_03"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/ic_right_arrow" />
-
-            <TextView
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@+id/iv_right_03"
-                android:text="提现" />
-
-        </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/curstom_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -204,6 +175,8 @@
                 android:text="最近访客"
                 android:textColor="#000000" />
 
+
+
             <ImageView
                 android:id="@+id/iv_right_04"
                 android:layout_width="wrap_content"
@@ -211,10 +184,51 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_right_arrow" />
+            <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/iv_right_04"
+                android:gravity="right"
+                android:paddingRight="10dp"
+                android:orientation="horizontal">
+                <com.xiangyueta.two.view.CircleImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/default_head"
+                    />
+                <com.xiangyueta.two.view.CircleImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/default_head"
+                    android:layout_marginLeft="20dp"
+                    />
+                <com.xiangyueta.two.view.CircleImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/default_head"
+                    android:layout_marginLeft="40dp"
 
+                    />
+                <com.xiangyueta.two.view.CircleImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="60dp"
+                    android:src="@drawable/default_head"
+                    />
+                <com.xiangyueta.two.view.CircleImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="80dp"
+                    android:src="@drawable/default_head"
+                    />
+
+
+
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/custom_center_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -239,13 +253,5 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <include layout="@layout/tab_support" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

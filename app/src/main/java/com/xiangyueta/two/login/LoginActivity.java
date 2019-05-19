@@ -39,6 +39,9 @@ public class LoginActivity extends Activity implements OnClickListener{
             case R.id.phone_register:
                 startActivity(new Intent(this,RegisterActivity.class));
                 break;
+            case R.id.phone_login:
+                startActivity(new Intent(this,PhoneLoginActivity.class));
+                break;
             default:
                 break;
         }

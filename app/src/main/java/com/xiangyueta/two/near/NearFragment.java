@@ -1,6 +1,5 @@
 package com.xiangyueta.two.near;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -8,15 +7,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xiangyueta.two.R;
-import com.xiangyueta.two.support.NavSupport;
-import com.xiangyueta.two.support.TabSupport;
+import com.xiangyueta.two.fragment.BaseFragment;
 import com.xiangyueta.two.view.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -24,7 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public class NearActivity extends Activity implements SwipeFlingAdapterView.onFlingListener,
+public class NearFragment extends BaseFragment implements SwipeFlingAdapterView.onFlingListener,
         SwipeFlingAdapterView.OnItemClickListener, View.OnClickListener {
 
     int [] headerIcons = {
@@ -51,16 +48,20 @@ public class NearActivity extends Activity implements SwipeFlingAdapterView.onFl
 
     private SwipeFlingAdapterView swipeView;
     private InnerAdapter adapter;
+    private View mView;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_fujin);
-
+    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mView = View.inflate(getActivity(), R.layout.fragment_fujin, null);
         initView();
         loadData();
+        return mView;
+    }
+
+
+    private View findViewById(int id){
+        return mView.findViewById(id);
     }
 
     private void initView() {
@@ -68,8 +69,6 @@ public class NearActivity extends Activity implements SwipeFlingAdapterView.onFl
         float density = dm.density;
         cardWidth = (int) (dm.widthPixels - (2 * 18 * density));
         cardHeight = (int) (dm.heightPixels - (338 * density));
-        new NavSupport(this,2);
-        new TabSupport(this,2);
         swipeView = (SwipeFlingAdapterView) findViewById(R.id.swipe_view);
         if (swipeView != null) {
             swipeView.setIsNeedSwipe(true);

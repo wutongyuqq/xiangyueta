@@ -5,12 +5,12 @@ package com.xiangyueta.two.entity;
  */
 public class FocusBean {
 	private int uid;
-    private String name;
-    private String pictrueUrl;
-    private String cityName;
-    private String num;
-    private String videoUrl;
-    private String girlname;
+    private String name ="";;
+    private String pictrueUrl ="";;
+    private String cityName ="";;
+    private String num ="";;
+    private String videoUrl ="";;
+    private String girlname ="";
 	public int getUid() {
 		return uid;
 	}

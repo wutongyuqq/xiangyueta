@@ -1,12 +1,14 @@
 package com.xiangyueta.two.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import com.xiangyueta.two.R;
 import com.xiangyueta.two.adapter.FirstFragmentAdapter;
 import com.xiangyueta.two.entity.FocusBean;
 import com.xiangyueta.two.http.AsyncHttp;
+import com.xiangyueta.two.persondetail.PersonDetailActivity;
 import com.xiangyueta.two.util.JsonUtils;
 import com.xiangyueta.two.util.MyParcel;
 
@@ -50,13 +53,23 @@ public class FirstFragment extends BaseFragment implements
         listView = (ListView)view.findViewById(R.id.list);
         context = getActivity();
         
-        
+        initView();
         getListData();
        
         
         return view;
     }
-    private void getListData(){
+
+	private void initView() {
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+				context.startActivity(new Intent(context,PersonDetailActivity.class));
+			}
+		});
+	}
+
+	private void getListData(){
     	HashMap<String,Object> map = new HashMap<String, Object>();
 		MyParcel parm =  new MyParcel();
 		map.put("name", 0);
@@ -83,7 +96,7 @@ public class FirstFragment extends BaseFragment implements
 				
 				switch (status) {
 				case 0:
-					Toast.makeText(getActivity(), "请求失败,请稍后重试", 0).show();
+					Toast.makeText(getActivity(), "请求失败,请稍后重试", Toast.LENGTH_LONG).show();
 					break;
 				case 1:
 					if(mapData.get("dataList")!=null){
@@ -100,7 +113,7 @@ public class FirstFragment extends BaseFragment implements
 			@Override
 			public void onFail(Object reult) {
 				//返回的网络数据为空；
-				Toast.makeText(getActivity(), "未获取到网络数据", 0).show();
+				Toast.makeText(getActivity(), "未获取到网络数据", Toast.LENGTH_LONG).show();
 			}
 		};
 		ah.execute(1000);

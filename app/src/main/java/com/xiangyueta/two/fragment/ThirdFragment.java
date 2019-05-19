@@ -98,7 +98,7 @@ public class ThirdFragment extends BaseFragment{
 
 				switch (status) {
 				case 0:
-					Toast.makeText(getActivity(), "请求失败,请稍后重试", 0).show();
+					Toast.makeText(getActivity(), "请求失败,请稍后重试", Toast.LENGTH_LONG).show();
 					break;
 				case 1:
 					if (mapData.get("dataList") != null) {
@@ -117,7 +117,7 @@ public class ThirdFragment extends BaseFragment{
 			@Override
 			public void onFail(Object reult) {
 				// 返回的网络数据为空；
-				Toast.makeText(getActivity(), "未获取到网络数据", 0).show();
+				Toast.makeText(getActivity(), "未获取到网络数据", Toast.LENGTH_LONG).show();
 			}
 		};
 		ah.execute(1000);

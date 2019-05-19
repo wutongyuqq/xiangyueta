@@ -1,11 +1,11 @@
 package com.xiangyueta.two.msg;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -18,25 +18,30 @@ import com.xiangyueta.two.R;
 import com.xiangyueta.two.adapter.WatchMsgAdapter;
 import com.xiangyueta.two.chat.ChatMsgActivity;
 import com.xiangyueta.two.entity.MsgBean;
-import com.xiangyueta.two.support.NavSupport;
-import com.xiangyueta.two.support.TabSupport;
+import com.xiangyueta.two.fragment.BaseFragment;
 
 /*
 * 私信列表
 *
 * */
-public class MsgListActivity extends Activity implements OnClickListener{
+public class MsgListFragment extends BaseFragment implements OnClickListener{
     ImageView image;
     ListView listView;
     List<MsgBean> listData;
+    private View mView;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.watch_msg);
-        new NavSupport(this,3);
-        new TabSupport(this,3);
+    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mView = View.inflate(getActivity(), R.layout.fragment_msg, null);
+        initView();
+        return mView;
+    }
 
+    private View findViewById(int id){
+        return mView.findViewById(id);
+    }
+
+    private void initView(){
+        listView = (ListView) findViewById(R.id.list_msg);
         listData = new ArrayList<MsgBean>();
         MsgBean bean1 = new MsgBean();
         bean1.setName("青儿");
@@ -80,16 +85,16 @@ public class MsgListActivity extends Activity implements OnClickListener{
         listData.add(bean5);
         listData.add(bean6);
         listData.add(bean7);
-        listView = (ListView) findViewById(R.id.list_msg);
-        listView.setAdapter(new WatchMsgAdapter(this,listData));
+
+        listView.setAdapter(new WatchMsgAdapter(getActivity(),listData));
         listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent toChat = new Intent(MsgListActivity.this, ChatMsgActivity.class);
+				Intent toChat = new Intent(getActivity(), ChatMsgActivity.class);
 				startActivity(toChat);
-	             overridePendingTransition(0, 0);
+                getActivity().overridePendingTransition(0, 0);
 			}
 		});
     }
