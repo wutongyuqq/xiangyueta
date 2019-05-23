@@ -11,14 +11,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.xiangyueta.two.R;
 import com.xiangyueta.two.adapter.WatchMsgAdapter;
 import com.xiangyueta.two.chat.ChatMsgActivity;
+import com.xiangyueta.two.chat.GlobalEventListener;
 import com.xiangyueta.two.entity.MsgBean;
 import com.xiangyueta.two.fragment.BaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.Conversation;
 
 /*
 * 私信列表
@@ -97,9 +101,30 @@ public class MsgListFragment extends BaseFragment implements OnClickListener{
                 getActivity().overridePendingTransition(0, 0);
 			}
 		});
+        initData();
     }
+
+
+    public void initData() {
+        List<Conversation> msgList = JMessageClient.getConversationList();
+        if (msgList != null) {
+
+
+        }
+    }
+
 	@Override
 	public void onClick(View v) {
 
 	}
+
+    @Override
+    public void onDestroy() {
+        //退出会话界面 (开始接收通知栏)
+        JMessageClient.exitConversation();
+        //设置消息接收 监听
+        GlobalEventListener.setJG(null);
+        super.onDestroy();
+    }
+
 }

@@ -9,6 +9,9 @@
     <color name="white">#FFFFFF</color>
     <color name="little_red">#FF6F9F</color>
     <color name="little_grey">#FADE83</color>
+    <color name="blue">#0000f1</color>
+    <color name="huise">#f100f1</color>
+    <color name="heise">#9900f9</color>
 
 
     <item name="disabled_alpha_material_light" format="float" type="dimen">0.26</item>

@@ -1,170 +1,165 @@
 package com.xiangyueta.two.chat;
 
 import android.app.Activity;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.ChatManager;
-import org.jivesoftware.smack.ChatManagerListener;
-import org.jivesoftware.smack.MessageListener;
-import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.SmackException.NotConnectedException;
-import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Message.Type;
 
 import com.xiangyueta.two.R;
-import com.xiangyueta.two.adapter.ChatMsgAdapter;
-import com.xiangyueta.two.dao.LoginDao;
-import com.xiangyueta.two.util.App;
-import com.xiangyueta.two.util.ConnectionManager;
-import com.xiangyueta.two.util.Util;
+import com.xiangyueta.two.persondetail.PersonDetailActivity;
+
+import java.util.List;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.content.ImageContent;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.Message;
+import cn.jpush.im.android.api.model.UserInfo;
+import cn.jpush.im.api.BasicCallback;
 
 public class ChatMsgActivity extends Activity implements OnClickListener{
-	ListView chat_list;
-	EditText chat_content;
-	private ChatMsgAdapter mChatAdapter;
-	String toChatAccount = "lipeng@127.0.0.1";
-	Button chat_sendbtn;
-	private Chat chat;
-	TextView to_chat_name;
+
+	TextView title;
+	private  EditText mEdit;
+	private RecyclerView mRecycler;
+	ChatMsgAdapter mAdapter;
+	private int position;
+	private String userName;
+	private Conversation conversation;
+	private boolean one;
+	private ImageView jg_details_img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.chat_msg);
-        chat_list = (ListView) findViewById(R.id.chat_list);
-		 chat_content = (EditText) findViewById(R.id.chat_content);
-		 chat_sendbtn = (Button) findViewById(R.id.chat_sendbtn);
-		 to_chat_name = (TextView) findViewById(R.id.to_chat_name);
-		 chat_sendbtn.setOnClickListener(this);
-		 Util.login(new LoginDao() {
-				
-				@Override
-				public void onSuccuss() {
-					new AsyncTask<Void, Void, Void>() {
+        setContentView(R.layout.activity_chat_new);
+		title = findViewById(R.id.jg_details_title);
+		mEdit = findViewById(R.id.jg_details_edit);
+		jg_details_img = findViewById(R.id.jg_details_img);
+		mRecycler = findViewById(R.id.jg_details_recy);
+		mRecycler.setLayoutManager(new LinearLayoutManager(this));
+		mAdapter = new ChatMsgAdapter(this);
+		mRecycler.setAdapter(mAdapter);
+		jg_details_img.setOnClickListener(this);
 
-						@Override
-						protected Void doInBackground(Void... params) {
-							// ①　在成功登录条件
-							XMPPConnection conn = ConnectionManager.get(App.me);
-							// ②　创建聊天管理对象(点击一个联系人默认是要聊)
-							if(conn!=null){
-								ChatManager cm = ChatManager.getInstanceFor(conn);
-
-							cm.addChatListener(new ChatManagerListener() {
-								@Override
-								public void chatCreated(Chat chat, boolean createdLocally) {
-									chat.addMessageListener(new MessageListener() {
-										@Override
-										public void processMessage(Chat chat, Message message) {
-											// TODO Auto-generated method stub
-											if(message==null || message.getBody()==null||"".equals(message.getBody())){
-												return;
-											}
-											processMsg(message);
-										}
-									});
-								}
-							});
-							// ③　创建出聊天对象
-							// cm.createChat(账号, 消息监听器 不会拦截到消息);
-							chat = cm.createChat(toChatAccount, null);
-
-							// ④　发送消息给目标账号(发送)
-							// ⑤　使用监听接收消息
-							}
-							return null;
-						}
-
-						protected void onPostExecute(Void result) {
-							mChatAdapter = new ChatMsgAdapter(ChatMsgActivity.this, toChatAccount);
-							chat_list.setAdapter(mChatAdapter);
-						};
-
-					}.execute();
-				}
-				
-				@Override
-				public void onFail() {
-				}
-			});
-	
+		position = getIntent().getIntExtra("position", 0);
+		//设置消息接收 监听
+		GlobalEventListener.setJG(this, false);
+        Conversation.createSingleConversation("10033","365bf6e6f5be7f76e61a6b59");
+		//进入会话状态,不接收通知栏
+		JMessageClient.enterSingleConversation("10033");
+		initData();
 
 	}
 
-	private void processMsg(final Message message) {
-
-		new AsyncTask<Void, Void, Void>() {
-
+	//发送消息
+	private void sendMsg(Message message){
+		//Message message = JMessageClient.createSingleTextMessage("","");
+		message.setOnSendCompleteCallback(new BasicCallback() {
 			@Override
-			protected Void doInBackground(Void... params) {
-				// TODO Auto-generated method stub
-				return null;
+			public void gotResult(int responseCode, String responseDesc) {
+				if (responseCode == 0) {
+					// 消息发送成功
+				} else {
+					// 消息发送失败
+				}
 			}
+		});
+		JMessageClient.sendMessage(message);    // 之后再调用发送消息 API
+	}
 
-			protected void onPostExecute(Void result) {
-				mChatAdapter.add(message);
-			};
 
-		}.execute();
+	public void initData() {
+		List<Conversation> msgList = JMessageClient.getConversationList();
+		if (msgList != null) {
+			if (msgList.size() > 0) {
+				if (msgList.get(position) != null) {
+					conversation = msgList.get(position);
+					//重置会话未读消息数
+					conversation.resetUnreadCount();
+
+				}
+			}
+		}
+
+		if (conversation != null) {
+			title.setText(conversation.getTitle() == null ? "" : conversation.getTitle());
+			UserInfo info = (UserInfo) conversation.getTargetInfo();
+			userName = info.getUserName();
+			//userName = "f8443445-a7ef-47d8-8005-b0d57851b396";  //todo 可自定义
+
+			//使列表滚动到底部
+			if (conversation.getAllMessage() != null) {
+				if (conversation.getAllMessage().size() > 0) {
+					mAdapter.setData(conversation.getAllMessage());
+					//设置刷新不闪屏
+					((SimpleItemAnimator) mRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
+					if (one) {
+						mAdapter.notifyDataSetChanged();
+					} else {
+						mAdapter.notifyItemInserted(conversation.getAllMessage().size() - 1);
+
+					}
+					mRecycler.scrollToPosition(conversation.getAllMessage().size() - 1);
+
+				}
+			}
+			mAdapter.setOnItemClickListener(new ChatMsgAdapter.OnItemClickListener() {
+				@Override
+				public void onItemClick(View view, int position) {
+					switch (view.getId()) {
+						case R.id.item_jg_details_img:
+							ImageContent imageContent = (ImageContent) conversation.getAllMessage().get(position).getContent();
+							startActivity(new Intent(ChatMsgActivity.this, PersonDetailActivity.class)
+									.putExtra("ImgUrl", imageContent.getLocalThumbnailPath()));
+							overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);//动画
+							break;
+					}
+				}
+			});
+		}
+		one=false; // 代表不是第一次initData
 	}
 
 	@Override
 	public void onClick(View arg0) {
-		switch(arg0.getId()){
-		case R.id.chat_sendbtn:
-			
-			send();
-			break;
+		switch (arg0.getId()) {
+			case R.id.jg_details_img:
+				if(mEdit.getText()!=null&&!TextUtils.isEmpty(mEdit.getText().toString())) {
+					//Conversation.createSingleConversation(String username, String appkey);
+
+					Message message = JMessageClient.createSingleTextMessage("10033", "365bf6e6f5be7f76e61a6b59",  mEdit.getText().toString());
+					if(message!=null) {
+						sendMsg(message);
+					}
+				}
+				break;
+			default:
+				break;
 		}
 	}
-	
-
-	public void send() {
-		
-		final String text = chat_content.getText().toString().trim();
-		chat_content.setText("");
-
-		new AsyncTask<Void, Void, Message>() {
-
-			@Override
-			protected Message doInBackground(Void... params) {
-				// TODO Auto-generated method stub
-				// chat.sendMessage(text);
-				Message msg = null;
-				try {
-					msg = new Message();
-					msg.setFrom(App.me);
-					msg.setTo("lipeng");
-					msg.setType(Type.chat);
-					msg.setBody(text);
-					chat.sendMessage(msg);
-				} catch (NotConnectedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return msg;
-			}
-
-			protected void onPostExecute(Message result) {
-				if (mChatAdapter == null) {
-					mChatAdapter = new ChatMsgAdapter(ChatMsgActivity.this, toChatAccount);
-					chat_list.setAdapter(mChatAdapter);
-				}
-				mChatAdapter.add(result);
-			};
-
-		}.execute();
+	@Override
+	protected void onDestroy() {
+		//退出会话界面 (开始接收通知栏)
+		JMessageClient.exitConversation();
+		//设置消息接收 监听
+		GlobalEventListener.setJG(null, false);
+		super.onDestroy();
 	}
+
+
+
 }
 

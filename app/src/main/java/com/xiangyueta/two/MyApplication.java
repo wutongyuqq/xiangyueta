@@ -19,9 +19,28 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.xiangyueta.two.R;
+import com.xiangyueta.two.chat.GlobalEventListener;
+import com.xiangyueta.two.service.NotificationClickEventReceiver;
+import com.xiangyueta.two.util.SharePreferenceManager;
+
+import cn.jpush.im.android.api.JMessageClient;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
+    private static final String JCHAT_CONFIGS = "JChat_configs";
+    public static final String TARGET_ID = "targetId";
+    public static final String ATUSER = "atuser";
+    public static final String TARGET_APP_KEY = "targetAppKey";
+
+    public static final String DRAFT = "draft";
+    public static final String GROUP_ID = "groupId";
+    public static final String POSITION = "position";
+    public static final String MsgIDs = "msgIDs";
+    public static final String NAME = "name";
+    public static final String ATALL = "atall";
+
+    public static final String CONV_TITLE = "conv_title";
+
     @Override
     public void onCreate() {
         // TODO Auto-generated method stub
@@ -29,6 +48,17 @@ public class MyApplication extends Application {
         // 缓存图片的配置，一般通用的配置
         instance = this;
         //initImageLoader(getApplicationContext());
+        //极光推送
+
+        JMessageClient.setDebugMode(true);
+        JMessageClient.init(this);
+        JMessageClient.registerEventReceiver(new GlobalEventListener(getApplicationContext()));
+
+        SharePreferenceManager.init(getApplicationContext(), JCHAT_CONFIGS);
+        //设置Notification的模式
+        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND | JMessageClient.FLAG_NOTIFY_WITH_LED | JMessageClient.FLAG_NOTIFY_WITH_VIBRATE);
+        //注册Notification点击的接收器
+        new NotificationClickEventReceiver(getApplicationContext());
     }
 
     public  void initImageLoader(Context context) {
@@ -65,6 +95,8 @@ public class MyApplication extends Application {
                 .delayBeforeLoading(100)//载入图片前稍做延时可以提高整体滑动的流畅度
                 .build();
         ImageLoader.getInstance().init(config);
+        JMessageClient.init(this);
+        JMessageClient.setDebugMode(true);
     }
     public static Context getContext() {
         return instance;

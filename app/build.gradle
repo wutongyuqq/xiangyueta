@@ -9,6 +9,17 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "365bf6e6f5be7f76e61a6b59", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
     buildTypes {
         release {
@@ -16,12 +27,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets.main{
+        jniLibs.srcDirs=['libs']
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api 'com.android.support:support-v4:22.0.0'
     api 'com.android.support:appcompat-v7:26.0.1'
     api 'com.android.support:design:26.0.1'
     api 'com.android.support:recyclerview-v7:26.0.1'
     api 'com.android.support:cardview-v7:26.0.1'
+
+    api 'cn.jiguang.sdk:jmessage:2.9.0'  // 此处以JMessage 2.9.0 版本为例。
+    api 'cn.jiguang.sdk:jcore:2.0.0'  // 此处以JCore 2.0.0 版本为例。
+    // 头像切圆
+    api 'de.hdodenhof:circleimageview:2.2.0'
+    //圆角图片
+    api 'com.makeramen:roundedimageview:2.2.1'
+    api 'com.github.bumptech.glide:glide:3.5.2'
+
+
 }
