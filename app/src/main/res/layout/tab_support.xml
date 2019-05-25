@@ -88,7 +88,6 @@
                     android:textColor="#FF6F9F" />
 
                 <TextView
-                    android:id="@+id/iv_tip"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_alignRight="@+id/tv_text_tip"

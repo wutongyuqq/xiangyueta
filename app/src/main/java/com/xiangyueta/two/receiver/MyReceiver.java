@@ -9,6 +9,7 @@ public class MyReceiver extends BroadcastReceiver {
     private static final String TAG = "test" ;
 
     public MyReceiver() {
+
     }
 
 

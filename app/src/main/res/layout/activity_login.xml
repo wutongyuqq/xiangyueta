@@ -5,7 +5,6 @@
     android:background="@drawable/i5"
     >
     <LinearLayout
-        android:id="@+id/login_bg_lay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"

@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
     <!-- 背景颜色 -->
-    <color name="common_top">#098ac1</color>
     <color name="white">#FFFFFF</color>
     <color name="little_red">#FF6F9F</color>
     <color name="little_grey">#FADE83</color>

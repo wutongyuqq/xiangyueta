@@ -17,7 +17,7 @@
                 android:id="@+id/person_banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/i2"
+                android:background="@drawable/i5"
                 android:orientation="horizontal">
 
                 <LinearLayout

@@ -14,7 +14,6 @@
         android:src="@drawable/girl003" />
 
     <TextView
-        android:id="@+id/iv_tip"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_alignParentTop="true"
@@ -25,9 +24,8 @@
         android:textColor="#ffffff"
         android:textSize="13px" />
 	</RelativeLayout>
-	<RelativeLayout 
-	    android:id="@+id/rl_02"
-	    android:layout_width="match_parent"
+	<RelativeLayout
+        android:layout_width="match_parent"
 	    android:layout_height="60dp"
 	    android:layout_alignTop="@+id/rl_01"
 	    android:layout_toRightOf="@+id/rl_01"

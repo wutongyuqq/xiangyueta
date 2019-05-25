@@ -25,10 +25,10 @@ public class NearFragment extends BaseFragment implements SwipeFlingAdapterView.
         SwipeFlingAdapterView.OnItemClickListener, View.OnClickListener {
 
     int [] headerIcons = {
-            R.drawable.i1,
-            R.drawable.i2,
-            R.drawable.i3,
-            R.drawable.i4,
+            R.drawable.i5,
+            R.drawable.i5,
+            R.drawable.i5,
+            R.drawable.i5,
             R.drawable.i5,
             R.drawable.i5
     };

@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.xiangyueta.two.R;
 import com.xiangyueta.two.home.HomeActivity;
+import com.xiangyueta.two.util.Constance;
+import com.xiangyueta.two.util.SharePreferenceManager;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
@@ -60,6 +62,9 @@ public class PhoneLoginActivity extends Activity implements OnClickListener{
                         Log.e("JMessageClient.login",i+":"+s);
                     }
                 });
+                SharePreferenceManager.init(this,Constance.CATCH_USERINFO_FILE);
+                SharePreferenceManager.setCachedUsername(phoneNum);
+                SharePreferenceManager.setCachedPsw(password);
                 startActivity(new Intent(this,HomeActivity.class));
                 break;
             default:

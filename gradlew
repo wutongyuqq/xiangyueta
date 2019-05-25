@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bimport com.xiangyueta.two.MyApplicationn/env sh
 
 ##############################################################################
 ##
